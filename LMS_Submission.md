@@ -9,9 +9,11 @@ Created a beginner-level n8n workflow named `My First N8N Workflow` using a Manu
 Configured a String field named `greeting` with the value `Hello, n8n!`.
 
 ## Repository
+
 https://github.com/SagarBommela/n8n-first-workflow-assessment
 
-## Demo Video
+Loom Video:
+
 https://www.loom.com/share/d8c821aa038948079f76f9c40bf7d49c
 
 

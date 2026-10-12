@@ -1,9 +1,9 @@
-# n8n Hands-On Beginner Course — Topic 1
+# n8n Hands-On— Topic 1
 
 ## Create Your First Workflow
 
-**Assessment:** Tayana Academy LMS — n8n Hands-On Level 1  
-**Difficulty:** Beginner  
+**Assessment:** n8n Hands-On Level 1  
+
 **Workflow Name:** My First N8N Workflow
 
 ## 1. Project Objective
