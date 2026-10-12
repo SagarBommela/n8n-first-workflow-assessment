@@ -1,0 +1,101 @@
+{
+  "name": "Topic 4 JSON Basics Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        0
+      ],
+      "id": "32d46488-6755-4746-be3c-1996300d20e5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\ncustomer: {\nname: \"Jane Doe\",\nemail: \"jane@example.com\",\naddress: {\ncity: \"New York\",\nzipcode: \"10001\"\n}\n},\norders: [\n{ id: 101, total: 45.99 },\n{ id: 102, total: 12.50 }\n],\nstatus:\"active\"\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        0
+      ],
+      "id": "e718a1bb-ed49-4b6a-92b6-ba84f99e0943",
+      "name": "Mock Nested JSON Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3a891b75-d19d-47ca-a36c-43223199a05e",
+              "name": "customerName",
+              "value": "={{ $json.customer.name }}",
+              "type": "string"
+            },
+            {
+              "id": "bb3d0d4d-418d-4baa-9520-15947384cb4d",
+              "name": "cityOfCustomer",
+              "value": "={{ $json.customer.address.city }}",
+              "type": "string"
+            },
+            {
+              "id": "c1e545c8-b2a1-4c37-9527-4d01bf86d61e",
+              "name": "firstOrderTotal",
+              "value": "={{ $json.orders[0].total }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        272,
+        0
+      ],
+      "id": "d51a9192-5302-449b-90f6-cec232897550",
+      "name": "Extract Values"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Mock Nested JSON Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock Nested JSON Data": {
+      "main": [
+        [
+          {
+            "node": "Extract Values",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c9d240d2-e1da-4da2-8b36-ccc64f28bb8a",
+  "meta": {
+    "instanceId": "a03c7678428ef19ededbf912f16f7d5798ec7b9ab4c17f2a2def6a9e791e7215"
+  },
+  "nodeGroups": [],
+  "id": "G8sSSrrwfAfh7FjE",
+  "tags": []
+}
