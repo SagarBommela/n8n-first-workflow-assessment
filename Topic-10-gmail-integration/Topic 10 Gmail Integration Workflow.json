@@ -1,0 +1,107 @@
+{
+  "name": "Topic 10 Gmail Integration Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        0
+      ],
+      "id": "2703c6a3-7167-47be-ba19-39ef6a4027cc",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1a81002f-4fda-4bd6-a5d5-f5288d7b17fd",
+              "name": "customerName",
+              "value": "Alice Smith",
+              "type": "string"
+            },
+            {
+              "id": "46438805-c4c1-4127-8cc1-72dcf4f9d62a",
+              "name": "customerEmail",
+              "value": "sagarbommela211@gmail.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        64,
+        0
+      ],
+      "id": "6edf7cbe-c4f8-4d77-bca5-7cb172e4806d",
+      "name": "Mock Customer Data"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.customerEmail }}",
+        "subject": "=Welcome to N8N Course, {{ $json.customerName }}",
+        "emailType": "text",
+        "message": "=Hi {{\n$json.customerName }},\n\nCongratulations on completing Topic 10 of the N8N Hands-On Beginner Course!\nThis personalized email was sent automatically using dynamic content from a previous\nnode.\nBest regards, Your Automation Engine",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        288,
+        0
+      ],
+      "id": "88754af4-dd91-4795-9b2f-9e7ceb9a3946",
+      "name": "Send Personalized Email",
+      "webhookId": "94bee7b1-d6af-44fc-a999-9dd7519a5a53",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7trozTjuwXMvj8ES",
+          "name": "Gmail account 16"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Mock Customer Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock Customer Data": {
+      "main": [
+        [
+          {
+            "node": "Send Personalized Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "83eb8ba4-9da8-4713-b5d8-6e3b1b55e0dc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a03c7678428ef19ededbf912f16f7d5798ec7b9ab4c17f2a2def6a9e791e7215"
+  },
+  "nodeGroups": [],
+  "id": "z0wX49VfHevRNjlk",
+  "tags": []
+}
