@@ -1,0 +1,147 @@
+{
+  "name": "Topic 15 Split in Batches Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        16
+      ],
+      "id": "5a09d7fc-d125-4b8c-b86c-870e9e3ae1bf",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  { json: { url: \"https://jsonplaceholder.typicode.com/posts/1\" } },\n  { json: { url: \"https://jsonplaceholder.typicode.com/posts/1\" } },\n  { json: { url: \"https://invalid-url-domain-does-not-exist.xyz/\" } },\n  { json: { url: \"https://jsonplaceholder.typicode.com/posts/1\" } },\n  { json: { url: \"https://jsonplaceholder.typicode.com/posts/1\" } }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -144,
+        16
+      ],
+      "id": "39c31a95-6012-4e1e-9991-af9c30dc41f1",
+      "name": "Mock Items List"
+    },
+    {
+      "parameters": {
+        "batchSize": 2,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        80,
+        16
+      ],
+      "id": "ffd62d50-92b9-4eb6-8d55-fa2d35ba27da",
+      "name": "Split in Batches"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        320,
+        224
+      ],
+      "id": "46929953-99fa-46cd-a1d6-4e0f02862fd7",
+      "name": "Fetch Details",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fd95670-7e8f-47d0-a1a7-1116b6aa9406",
+              "name": "status",
+              "value": "All Batches Processed",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        304,
+        -16
+      ],
+      "id": "ae9bc889-5b26-4c2e-915a-125f9701a573",
+      "name": "Compile Final List"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Mock Items List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock Items List": {
+      "main": [
+        [
+          {
+            "node": "Split in Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split in Batches": {
+      "main": [
+        [
+          {
+            "node": "Compile Final List",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Details": {
+      "main": [
+        [
+          {
+            "node": "Split in Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "acd46dbb-2cd2-41c3-8812-bced6abb1ed5",
+  "meta": {
+    "instanceId": "a03c7678428ef19ededbf912f16f7d5798ec7b9ab4c17f2a2def6a9e791e7215"
+  },
+  "nodeGroups": [],
+  "id": "MH7VIs7fJI1ryZWi",
+  "tags": []
+}
