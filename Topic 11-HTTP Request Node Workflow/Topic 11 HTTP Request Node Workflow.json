@@ -1,0 +1,135 @@
+{
+  "name": "Topic 11 HTTP Request Node Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        0
+      ],
+      "id": "6fa9e6db-da24-4f72-88b6-1ba3003a1072",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/users/1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        80,
+        0
+      ],
+      "id": "ac2cf602-b4a4-4697-9d33-d776417471fd",
+      "name": "Fetch User"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "315c03ed-4c77-49e0-bdaa-5ca6f2c2b5b8",
+              "name": "title",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "42b25cdd-3e6f-4f66-93f0-3117ba9a80c2",
+              "name": "body",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        304,
+        0
+      ],
+      "id": "f217ae94-b3ef-483b-b300-5c1a4cc85937",
+      "name": "Prepare Post Payload"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json.body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        528,
+        0
+      ],
+      "id": "071312c0-c97c-47d2-8c55-c8e0b4d01ab1",
+      "name": "Send Custom Post"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Fetch User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch User": {
+      "main": [
+        [
+          {
+            "node": "Prepare Post Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Post Payload": {
+      "main": [
+        [
+          {
+            "node": "Send Custom Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c30a966b-b9eb-4175-affc-9f384e0819bd",
+  "meta": {
+    "instanceId": "a03c7678428ef19ededbf912f16f7d5798ec7b9ab4c17f2a2def6a9e791e7215"
+  },
+  "nodeGroups": [],
+  "id": "zGW04DJ9iUONL5mm",
+  "tags": []
+}
